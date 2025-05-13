@@ -78,7 +78,7 @@ export default function AboutPage() {
             About PawaWeather
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
-            Africa's most accurate weather companion, powered by advanced prediction models
+            Africa&apos;s most accurate weather companion, powered by advanced prediction models
           </p>
         </motion.section>
 
@@ -163,7 +163,7 @@ export default function AboutPage() {
         >
           <blockquote className="text-center max-w-3xl mx-auto">
             <p className="text-xl italic text-gray-600 mb-4">
-              "PawaWeather predicted the dry spell two weeks before anyone else. We adjusted our planting schedule and saved 40% of our crops."
+              &quot;PawaWeather predicted the dry spell two weeks before anyone else. We adjusted our planting schedule and saved 40% of our crops.&quot;
             </p>
             <footer className="font-medium text-blue-600">
               — Ngozi Wafula, Agricultural Cooperative (Bungoma, Kenya)

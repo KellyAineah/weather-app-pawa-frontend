@@ -53,7 +53,6 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [inputCity, setInputCity] = useState(city);
   const [unit, setUnit] = useState<'metric' | 'imperial'>('metric');
-  const [initialLoad, setInitialLoad] = useState(true);
 
   const funFacts = useMemo(() => [
     "Nairobi means &apos;cool water&apos; in the Maasai language",
@@ -91,7 +90,6 @@ export default function Home() {
         setError('Unable to load weather data. Please try again.');
       } finally {
         setLoading(false);
-        setInitialLoad(false);
       }
     };
 
@@ -208,6 +206,18 @@ export default function Home() {
             </div>
           </div>
         )}
+
+        {/* Fun Facts Section */}
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800">Did You Know?</h2>
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {funFacts.map((fact, index) => (
+              <li key={index} className="p-4 bg-indigo-50 rounded-lg text-gray-700">
+                {fact}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
