@@ -4,13 +4,12 @@ import { useState, useEffect } from 'react';
 import { CloudSun, Thermometer, Droplet, Wind } from 'lucide-react';
 
 export default function LoadingSpinner() {
-  // Define fun facts
-  const funFacts = [
+  const [funFacts] = useState([
     "Nairobi means 'cool water' in the Maasai language",
     "The city sits at 1,795 meters above sea level",
     "July is typically the coolest month in Nairobi",
     "Nairobi National Park is the only wildlife park in a capital city",
-  ];
+  ]);
 
   const [currentFact, setCurrentFact] = useState(funFacts[0]);
 
@@ -22,18 +21,16 @@ export default function LoadingSpinner() {
       });
     }, 5000); 
 
-    return () => clearInterval(factInterval); // Clean up interval on component unmount
-  }, []);
+    return () => clearInterval(factInterval);
+  }, [funFacts]);
 
   return (
     <div className="flex flex-col items-center justify-center py-16 space-y-8">
-      {/* Animated weather icon */}
       <div className="relative">
         <CloudSun className="w-16 h-16 text-blue-400 animate-pulse" />
         <div className="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin" />
       </div>
 
-      {/* Loading progress indicators */}
       <div className="w-full max-w-md space-y-4">
         <div className="flex items-center space-x-4">
           <Thermometer className="w-6 h-6 text-blue-500" />
@@ -64,7 +61,6 @@ export default function LoadingSpinner() {
         </div>
       </div>
 
-      {/* Fun weather facts */}
       <div className="text-center max-w-md">
         <p className="text-blue-600 font-medium">Did you know?</p>
         <p className="text-gray-600 animate-fade-in">{currentFact}</p>

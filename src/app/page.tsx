@@ -1,7 +1,8 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useEffect, useState, useMemo } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Sun,
   CloudRain,
@@ -42,7 +43,7 @@ interface ForecastData {
   forecast: ForecastItem[];
 }
 
-export default function Home() {
+function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const city = searchParams.get('city') || 'Nairobi';
@@ -55,7 +56,7 @@ export default function Home() {
   const [unit, setUnit] = useState<'metric' | 'imperial'>('metric');
 
   const funFacts = useMemo(() => [
-    "Nairobi means &apos;cool water&apos; in the Maasai language",
+    "Nairobi means 'cool water' in the Maasai language",
     "The city sits at 1,795 meters above sea level",
     "July is typically the coolest month in Nairobi",
     "Nairobi National Park is the only wildlife park in a capital city"
@@ -220,6 +221,14 @@ export default function Home() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <HomeContent />
+    </Suspense>
   );
 }
 
