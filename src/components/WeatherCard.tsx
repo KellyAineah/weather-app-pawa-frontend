@@ -1,8 +1,8 @@
-
 'use client';
 
 import { motion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
+import Image from 'next/image';
 
 interface ForecastItem {
   datetime: string;
@@ -31,14 +31,18 @@ export default function WeatherCard({
   weather,
   forecast,
   city,
+  unit = 'metric',
   error,
   onRetry,
+  onToggleUnit,
 }: {
   weather?: WeatherData;
   forecast?: ForecastData;
   city: string;
+  unit?: 'metric' | 'imperial';
   error?: string;
   onRetry?: () => void;
+  onToggleUnit?: () => void;
 }) {
   if (error) {
     return (
@@ -68,7 +72,6 @@ export default function WeatherCard({
     return null;
   }
 
-  // Process forecast data to group by day and get daily averages
   const processForecast = (forecastData: ForecastItem[]) => {
     if (!forecastData) return [];
     
@@ -93,11 +96,9 @@ export default function WeatherCard({
       const minTemp = Math.min(...temps);
       const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
       
-      // Get the most common weather condition for the day
       const descriptions = items.map(item => item.description);
       const description = mode(descriptions);
       
-      // Get the most common icon for the day
       const icons = items.map(item => item.icon);
       const icon = mode(icons);
       
@@ -110,10 +111,9 @@ export default function WeatherCard({
         description,
         icon
       };
-    }).slice(0, 3); // Get only next 3 days
+    }).slice(0, 3);
   };
   
-  // Helper function to find mode (most frequent value) in array
   const mode = (arr: string[]) => {
     const frequency: Record<string, number> = {};
     let max = 0;
@@ -134,23 +134,35 @@ export default function WeatherCard({
 
   return (
     <div className="bg-white text-black p-6 mt-6 max-w-4xl mx-auto rounded-2xl shadow-md">
-      <h2 className="text-xl font-semibold mb-3">
-        Current Weather in {weather.location || city}
-      </h2>
+      <div className="flex justify-between items-start mb-3">
+        <h2 className="text-xl font-semibold">
+          Current Weather in {weather.location || city}
+        </h2>
+        {onToggleUnit && (
+          <button 
+            onClick={onToggleUnit}
+            className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm hover:bg-blue-200 transition"
+          >
+            °{unit === 'metric' ? 'F' : 'C'}
+          </button>
+        )}
+      </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4 text-center">
-        <p><span className="font-bold">Temp:</span> {weather.temperature}°C</p>
+        <p><span className="font-bold">Temp:</span> {weather.temperature}°{unit === 'metric' ? 'C' : 'F'}</p>
         <p><span className="font-bold">Desc:</span> {weather.description}</p>
         <p><span className="font-bold">Humidity:</span> {weather.humidity}%</p>
-        <p><span className="font-bold">Wind:</span> {weather.wind_speed} km/h</p>
+        <p><span className="font-bold">Wind:</span> {weather.wind_speed} {unit === 'metric' ? 'km/h' : 'mph'}</p>
       </div>
 
       {weather.icon && (
         <div className="flex justify-center mb-6">
-          <img 
-            src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`} 
+          <Image 
+            src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
             alt={weather.description}
-            className="w-24 h-24"
+            width={96}
+            height={96}
+            unoptimized
           />
         </div>
       )}
@@ -169,13 +181,15 @@ export default function WeatherCard({
               >
                 <span className="font-semibold text-lg">{day.day}</span>
                 <span className="text-sm text-gray-600 mb-2">{day.date.split(',')[1]}</span>
-                <img 
-                  src={`https://openweathermap.org/img/wn/${day.icon}@2x.png`} 
+                <Image 
+                  src={`https://openweathermap.org/img/wn/${day.icon}@2x.png`}
                   alt={day.description}
-                  className="w-16 h-16"
+                  width={64}
+                  height={64}
+                  unoptimized
                 />
                 <div className="flex flex-col items-center mt-2">
-                  <span className="text-2xl font-bold">{day.temp}°C</span>
+                  <span className="text-2xl font-bold">{day.temp}°{unit === 'metric' ? 'C' : 'F'}</span>
                   <div className="flex gap-2 mt-1">
                     <span className="text-sm text-blue-600">H: {day.maxTemp}°</span>
                     <span className="text-sm text-blue-400">L: {day.minTemp}°</span>

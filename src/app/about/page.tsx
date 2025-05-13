@@ -1,7 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Cloud, Sun, Umbrella, Wind, Thermometer, MapPin, Droplet, Eye } from 'lucide-react';
+import {
+  Sun, Umbrella, Wind, Thermometer,
+  MapPin, Droplet, Eye
+} from 'lucide-react';
 import Link from 'next/link';
 
 export default function AboutPage() {
@@ -60,6 +63,7 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-100 text-gray-800">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+
         {/* Hero Section */}
         <motion.section 
           initial={{ opacity: 0, y: 20 }}
@@ -78,7 +82,7 @@ export default function AboutPage() {
           </p>
         </motion.section>
 
-        {/* App Description */}
+        {/* Description Section */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -98,14 +102,14 @@ export default function AboutPage() {
               for your exact location.
             </p>
             <p>
-              Unlike basic weather apps, we provide <span className="font-semibold">actionable insights</span> tailored to African weather patterns - 
+              Unlike basic weather apps, we provide <span className="font-semibold">actionable insights</span> tailored to African weather patterns — 
               from the harmattan winds of West Africa to the tropical storms of the East coast. 
               Know exactly when to plant, travel, or prepare for severe weather.
             </p>
           </div>
         </motion.div>
 
-        {/* Weather Features */}
+        {/* Features Section */}
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -162,7 +166,7 @@ export default function AboutPage() {
               "PawaWeather predicted the dry spell two weeks before anyone else. We adjusted our planting schedule and saved 40% of our crops."
             </p>
             <footer className="font-medium text-blue-600">
-              — Ngozi Okeke, Agricultural Cooperative (Lagos, Nigeria)
+              — Ngozi Wafula, Agricultural Cooperative (Bungoma, Kenya)
             </footer>
           </blockquote>
         </motion.div>
@@ -181,6 +185,7 @@ export default function AboutPage() {
             </button>
           </Link>
         </motion.div>
+
       </div>
     </main>
   );

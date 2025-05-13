@@ -15,13 +15,40 @@ import {
 import WeatherCard from '../components/WeatherCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+interface WeatherData {
+  location: string;
+  temperature: number;
+  description: string;
+  humidity: number;
+  wind_speed: number;
+  icon?: string;
+  coord?: {
+    lat: number;
+    lon: number;
+  };
+}
+
+interface ForecastItem {
+  datetime: string;
+  temperature: number;
+  description: string;
+  icon: string;
+  humidity?: number;
+  wind_speed?: number;
+}
+
+interface ForecastData {
+  location: string;
+  forecast: ForecastItem[];
+}
+
 export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const city = searchParams.get('city') || 'Nairobi';
 
-  const [weather, setWeather] = useState<any>(null);
-  const [forecast, setForecast] = useState<any>(null);
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [forecast, setForecast] = useState<ForecastData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [inputCity, setInputCity] = useState(city);
@@ -29,7 +56,7 @@ export default function Home() {
   const [initialLoad, setInitialLoad] = useState(true);
 
   const funFacts = useMemo(() => [
-    "Nairobi means 'cool water' in the Maasai language",
+    "Nairobi means &apos;cool water&apos; in the Maasai language",
     "The city sits at 1,795 meters above sea level",
     "July is typically the coolest month in Nairobi",
     "Nairobi National Park is the only wildlife park in a capital city"
@@ -141,24 +168,10 @@ export default function Home() {
 
         {/* Weather Card */}
         <div className="mb-8">
-          {loading && (
-            <div className="flex justify-center items-center py-16">
-              <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-            </div>
-          )}
+          {loading && <LoadingSpinner />}
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-md text-center">
               {error}
-            </div>
-          )}
-          {loading && initialLoad && (
-            <div className="mt-8 text-center animate-fade-in">
-              <p className="text-gray-600 mb-2">Fetching fresh weather data for {city}...</p>
-              <div className="inline-block bg-blue-50 rounded-full px-4 py-2">
-                <p className="text-blue-600">
-                  {funFacts[Math.floor(Math.random() * funFacts.length)]}
-                </p>
-              </div>
             </div>
           )}
           {weather && !error && (
@@ -239,8 +252,12 @@ function getWindDescription(speed: number, unit: string): string {
   return 'High winds';
 }
 
-function getWeatherTips(weather: any, unit: string) {
-  const tips = [];
+function getWeatherTips(weather: WeatherData, unit: 'metric' | 'imperial') {
+  const tips: Array<{
+    icon: React.ReactNode;
+    title: string;
+    description: string;
+  }> = [];
 
   // Temperature tips
   const temp = weather.temperature;

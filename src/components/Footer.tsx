@@ -2,10 +2,9 @@
 
 import Link from 'next/link';
 
-const Footer = () => {
+export default function Footer() {
   return (
     <footer className="relative bg-blue-600 text-white mt-10">
-      
       <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
         <svg
           viewBox="0 0 1200 100"
@@ -16,18 +15,15 @@ const Footer = () => {
         </svg>
       </div>
 
-      {/* Footer content */}
       <div className="relative pt-20 pb-6 px-6 md:px-12">
         <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-8">
-        
           <div className="md:w-1/2">
             <h3 className="text-lg font-semibold text-white mb-4">PawaWeather</h3>
             <p className="text-blue-100">
-              Africa's most accurate weather companion, providing hyper-local forecasts.
+              Africa&apos;s most accurate weather companion, providing hyper-local forecasts.
             </p>
           </div>
-
-          {/* Quick Links Section */}
+          
           <div className="md:w-1/2">
             <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
             <ul className="space-y-2">
@@ -44,14 +40,11 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-
         
         <p className="text-sm text-center text-blue-100">
-          © {new Date().getFullYear()} WeatherWise. All rights reserved.
+          © {new Date().getFullYear()} PawaWeather. All rights reserved.
         </p>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
