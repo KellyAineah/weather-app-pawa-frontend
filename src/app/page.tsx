@@ -175,11 +175,11 @@ export default function Home() {
           {weather && !error && (
             <WeatherCard
               weather={weather}
-              forecast={forecast}
+              forecast={forecast || undefined}
               city={city}
               unit={unit}
               onToggleUnit={toggleUnit}
-              error={error}
+              error={error || undefined}
               onRetry={() => {
                 if (inputCity.trim()) {
                   router.push(`/?city=${encodeURIComponent(inputCity.trim())}`);

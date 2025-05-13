@@ -37,7 +37,7 @@ export default function WeatherCard({
   onToggleUnit,
 }: {
   weather?: WeatherData;
-  forecast?: ForecastData;
+  forecast?: ForecastData | null;
   city: string;
   unit?: 'metric' | 'imperial';
   error?: string;
