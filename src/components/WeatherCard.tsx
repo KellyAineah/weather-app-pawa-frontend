@@ -139,12 +139,13 @@ export default function WeatherCard({
           Current Weather in {weather.location || city}
         </h2>
         {onToggleUnit && (
-          <button 
-            onClick={onToggleUnit}
-            className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm hover:bg-blue-200 transition"
-          >
-            °{unit === 'metric' ? 'F' : 'C'}
-          </button>
+          <button
+  onClick={onToggleUnit}
+  className="px-4 py-2 bg-blue-500/10 text-blue-700 rounded-full text-sm font-medium hover:bg-blue-500/20 transition-colors border border-blue-300 flex items-center gap-1"
+>
+  <span className="font-bold">°{unit === 'metric' ? 'F' : 'C'}</span>
+  <span className="text-xs">({unit === 'metric' ? 'Switch to Fahrenheit' : 'Switch to Celsius'})</span>
+</button>
         )}
       </div>
 
