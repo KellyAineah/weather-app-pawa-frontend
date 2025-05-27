@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PawaWeather
+
+PawaWeather is a modern, responsive weather application built with Next.js and Tailwind CSS. It fetches real-time weather data from a backend service and displays it in a clean and dynamic interface. The application features a sticky navigation bar, skeleton loading placeholders, and a simple user experience optimized for performance and clarity.
+
+## Features
+
+- Real-time weather updates using OpenWeatherMap API (via a backend service)
+- Search for weather by city name
+- Skeleton loaders for a better user experience while fetching data
+- Responsive layout suitable for both desktop and mobile devices
+- Sticky navbar that changes appearance on scroll
+- Modular and reusable React components
+
+## Tech Stack
+
+- **Frontend Framework**: Next.js (App Router)
+- **Styling**: Tailwind CSS
+- **HTTP Client**: Built-in `fetch` with API proxy
+- **Deployment**: Vercel or any compatible platform
+- **Backend Proxy**: Deployed endpoint for weather data fetching
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
+- Node.js (version 18 or higher recommended)
+- npm or yarn
+- An OpenWeatherMap API key (used in the backend)
+
+### Installation
+
+1. Clone the repository:
+
+
+git clone https://github.com/your-username/pawa-weather.git
+cd pawa-weather
+
+Install dependencies:
+
+npm install
+# or
+yarn install
+
+Create a .env.local file at the root of the project and add your API URL:
+
+NEXT_PUBLIC_API_URL=https://weather-app-pawa.onrender.com
+
+Ensure that the API endpoint is live and functioning.
+
+Run the development server:
+
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Author
+Kelly Aineah Wanyama
+Engineering Graduate & Full-Stack Developer
+Focused on building reliable and user-friendly web applications.
