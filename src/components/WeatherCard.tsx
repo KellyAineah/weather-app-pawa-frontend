@@ -26,7 +26,7 @@ interface ForecastData {
   location: string;
   forecast: ForecastItem[];
 }
-
+// This component displays the current weather and a 3-day forecast for a given city.
 export default function WeatherCard({
   weather,
   forecast,
@@ -36,13 +36,13 @@ export default function WeatherCard({
   onRetry,
   onToggleUnit,
 }: {
-  weather?: WeatherData;
-  forecast?: ForecastData | null;
-  city: string;
-  unit?: 'metric' | 'imperial';
-  error?: string;
-  onRetry?: () => void;
-  onToggleUnit?: () => void;
+  weather?: WeatherData;    // Current weather data
+  forecast?: ForecastData | null;    // Forecast data, can be null if not available
+  city: string;      // City name for display
+  unit?: 'metric' | 'imperial';    // Temperature unit, default is 'metric'
+  error?: string;     // Error message to display if there's an issue fetching data
+  onRetry?: () => void;    // Callback function to retry fetching data
+  onToggleUnit?: () => void;   // Callback function to toggle temperature unit
 }) {
   if (error) {
     return (
@@ -71,12 +71,12 @@ export default function WeatherCard({
   if (!weather) {
     return null;
   }
-
+ // If no forecast data is available, we can still show the current weather.
   const processForecast = (forecastData: ForecastItem[]) => {
     if (!forecastData) return [];
-    
+    // Group forecast items by date and calculate daily averages.
     const dailyForecast: Record<string, ForecastItem[]> = {};
-    
+    // Iterate through the forecast data and group by date.
     forecastData.forEach(item => {
       const date = new Date(item.datetime).toLocaleDateString('en-US', {
         weekday: 'short',
@@ -89,13 +89,15 @@ export default function WeatherCard({
       }
       dailyForecast[date].push(item);
     });
-    
+    // calculate the average temperature, max, min, and most common description/icon for each day.
     return Object.entries(dailyForecast).map(([date, items]) => {
+      // Calculate average, max, and min temperatures.
       const temps = items.map(item => item.temperature);
       const maxTemp = Math.max(...temps);
       const minTemp = Math.min(...temps);
       const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
       
+      // Get the most common description and icon.
       const descriptions = items.map(item => item.description);
       const description = mode(descriptions);
       
@@ -111,14 +113,16 @@ export default function WeatherCard({
         description,
         icon
       };
-    }).slice(0, 3);
+    }).slice(0, 3); // Limit to 3 days
   };
   
+  // Function to find the mode (most common item) in an array.
   const mode = (arr: string[]) => {
+    // If the array is empty, return an empty string.
     const frequency: Record<string, number> = {};
     let max = 0;
     let result = '';
-    
+    // Iterate through the array and count occurrences of each item.
     for (const item of arr) {
       frequency[item] = (frequency[item] || 0) + 1;
       if (frequency[item] > max) {
@@ -127,9 +131,9 @@ export default function WeatherCard({
       }
     }
     
-    return result;
+    return result;// If no mode is found, return an empty string.
   };
-
+  // Process the forecast data to get a structured format for display.
   const processedForecast = forecast ? processForecast(forecast.forecast) : [];
 
   return (

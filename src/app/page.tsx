@@ -49,7 +49,7 @@ function HomeContent() {
   const searchParams = useSearchParams(); // useSearchParams hook to access query parameters
   const city = searchParams.get("city") || "Nairobi"; // Default city is Nairobi
 
-//React State hooks for managing weather data, loading state, error messages, and user input
+  //React State hooks for managing weather data, loading state, error messages, and user input
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [forecast, setForecast] = useState<ForecastData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -57,7 +57,7 @@ function HomeContent() {
   const [inputCity, setInputCity] = useState(city);
   const [unit, setUnit] = useState<"metric" | "imperial">("metric");
 
-   // Static fun facts about Nairobi memoized so it doesn't recreate on each render
+  // Static fun facts about Nairobi memoized so it doesn't recreate on each render
   const funFacts = useMemo(
     () => [
       "Nairobi means 'cool water' in the Maasai language",
@@ -67,11 +67,11 @@ function HomeContent() {
     ],
     []
   );
-// Fetch weather and forecast data whenever city or unit changes
+  // Fetch weather and forecast data whenever city or unit changes
   useEffect(() => {
     const fetchWeatherData = async () => {
       if (!city) return;
-    // Reset state before fetching new data
+      // Reset state before fetching new data
       setLoading(true);
       setError(null);
       setWeather(null);
@@ -105,11 +105,11 @@ function HomeContent() {
         setLoading(false);
       }
     };
-// Call the fetch function to get the weather data
+    // Call the fetch function to get the weather data
     fetchWeatherData();
   }, [city, unit]);
 
- // Handle form submission to search for a city
+  // Handle form submission to search for a city
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputCity.trim()) {
