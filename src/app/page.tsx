@@ -16,6 +16,7 @@ import {
 import WeatherCard from "../components/WeatherCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 
+// Typescript interfaces for weather data and forecast data structures
 interface WeatherData {
   location: string;
   temperature: number;
@@ -44,10 +45,11 @@ interface ForecastData {
 }
 
 function HomeContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const city = searchParams.get("city") || "Nairobi";
+  const router = useRouter(); // useRouter hook to programmatically navigate
+  const searchParams = useSearchParams(); // useSearchParams hook to access query parameters
+  const city = searchParams.get("city") || "Nairobi"; // Default city is Nairobi
 
+//React State hooks for managing weather data, loading state, error messages, and user input
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [forecast, setForecast] = useState<ForecastData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -55,6 +57,7 @@ function HomeContent() {
   const [inputCity, setInputCity] = useState(city);
   const [unit, setUnit] = useState<"metric" | "imperial">("metric");
 
+   // Static fun facts about Nairobi memoized so it doesn't recreate on each render
   const funFacts = useMemo(
     () => [
       "Nairobi means 'cool water' in the Maasai language",
@@ -64,17 +67,18 @@ function HomeContent() {
     ],
     []
   );
-
+// Fetch weather and forecast data whenever city or unit changes
   useEffect(() => {
     const fetchWeatherData = async () => {
       if (!city) return;
-
+    // Reset state before fetching new data
       setLoading(true);
       setError(null);
       setWeather(null);
       setForecast(null);
 
       try {
+        // Fetch weather and forecast data from the API
         const [weatherResponse, forecastResponse] = await Promise.all([
           fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/weather?city_name=${city}&units=${unit}`
@@ -83,14 +87,15 @@ function HomeContent() {
             `${process.env.NEXT_PUBLIC_API_URL}/forecast?city_name=${city}&units=${unit}`
           ),
         ]);
-
+        // Check if both responses are ok, otherwise throw an error
         if (!weatherResponse.ok || !forecastResponse.ok) {
           throw new Error("Failed to fetch weather data");
         }
-
+        // Parse the JSON responses
         const weatherData = await weatherResponse.json();
         const forecastData = await forecastResponse.json();
 
+        // Update state with the fetched data
         setWeather(weatherData);
         setForecast(forecastData);
       } catch (err) {
@@ -100,10 +105,11 @@ function HomeContent() {
         setLoading(false);
       }
     };
-
+// Call the fetch function to get the weather data
     fetchWeatherData();
   }, [city, unit]);
 
+ // Handle form submission to search for a city
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputCity.trim()) {
@@ -252,12 +258,13 @@ function HomeContent() {
 
 export default function Home() {
   return (
+    // Use Suspense to handle loading state for the HomeContent component
     <Suspense fallback={<LoadingSpinner />}>
       <HomeContent />
     </Suspense>
   );
 }
-
+// This component displays weather highlights like temperature, humidity, and wind speed
 function WeatherHighlight({
   icon,
   title,
