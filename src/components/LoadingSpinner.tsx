@@ -14,6 +14,7 @@ export default function LoadingSpinner() {
   const [currentFact, setCurrentFact] = useState(funFacts[0]);
 
   useEffect(() => {
+    // Change the fact every 5 seconds
     const factInterval = setInterval(() => {
       setCurrentFact((prevFact) => {
         const currentIndex = funFacts.indexOf(prevFact);
@@ -21,7 +22,7 @@ export default function LoadingSpinner() {
       });
     }, 5000); 
 
-    return () => clearInterval(factInterval);
+    return () => clearInterval(factInterval); // Cleanup the interval on component unmount
   }, [funFacts]);
 
   return (

@@ -1,6 +1,7 @@
 'use client';
 
 export function WeatherCardSkeleton() {
+  // This component renders a skeleton loader for a weather card
   return (
     <div className="bg-white rounded-2xl shadow-xl overflow-hidden animate-pulse">
       <div className="bg-gray-200 h-48"></div>

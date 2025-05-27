@@ -5,22 +5,24 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
-  const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname(); // Get the current path
+  const [scrolled, setScrolled] = useState(false);  // Track if the user has scrolled
 
   useEffect(() => {
+    // Add scroll event listener to change navbar style on scroll
     const handleScroll = () => {
+      // Check if the user has scrolled more than 50 pixels
       setScrolled(window.scrollY > 50);
     };
-
+  // Attach the scroll event listener
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
+  // Define the classes for the navbar based on scroll state
   const navClasses = `sticky top-0 z-50 px-4 transition-all duration-300 ease-in-out ${
     scrolled ? 'bg-white shadow-md py-3 text-gray-900' : 'bg-blue-600 py-5 text-white'
   }`;
-
+// Define the classes for the links based on the current path and scroll state
   const linkClasses = (path: string) =>
     `transition duration-200 ${
       pathname === path
